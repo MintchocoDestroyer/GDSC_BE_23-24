@@ -2,14 +2,16 @@ package gdsc.hello.entity;
 
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name= "product")
+@Builder
 @Getter @Setter
+@NoArgsConstructor @AllArgsConstructor
+@EqualsAndHashCode @ToString(exclude = "name")
+@Table(name= "product")
 public class Product {
 
     @Id
