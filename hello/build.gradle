@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.2.0'
 	id 'io.spring.dependency-management' version '1.1.4'
+	id 'jacoco'
 }
 
 group = 'gdsc'
@@ -15,19 +16,71 @@ repositories {
 	mavenCentral()
 }
 
+jacoco {
+	toolVersion = "0.8.11"
+	reportsDirectory = layout.buildDirectory.dir('customJacocoReportDir')
+}
+
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.projectlombok:lombok'
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
-	implementation group: 'com.google.code.gson', name: 'gson', version: '2.7'
+	implementation group: 'com.google.code.gson', name: 'gson', version: '2.8.9'
 
 	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+
+	testCompileOnly 'org.projectlombok:lombok' // 테스트 의존성 추가
+	testAnnotationProcessor 'org.projectlombok:lombok' // 테스트 의존성 추가
+}
+
+jacocoTestReport{
+	reports {
+		xml.required = true
+		csv.required = true
+		html.required = true
+	}
+}
+
+tasks.withType(JavaCompile).configureEach {
+	options.encoding = "UTF-8"
 }
 
 tasks.named('test') {
+	finalizedBy jacocoTestReport
 	useJUnitPlatform()
+}
+
+jacocoTestReport {
+
+	dependsOn test
+	finalizedBy 'jacocoTestCoverageVerification'
+}
+
+jacocoTestCoverageVerification {
+	violationRules {
+		rule {
+			enabled = true;
+			element = 'BUNDLE'
+
+			limit {
+				counter = 'INSTRUCTION'
+				value = 'COVEREDRATIO'
+				minimum = 0.0
+			}
+			element = 'METHOD'
+			limit{
+				counter = 'LINE'
+				value = 'TOTALCOUNT'
+				maximum = 50
+			}
+		}
+
+	}
 }
