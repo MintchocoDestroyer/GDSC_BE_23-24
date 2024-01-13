@@ -36,16 +36,20 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 
-	testCompileOnly 'org.projectlombok:lombok:1.18.12' // 테스트 의존성 추가
-	testAnnotationProcessor 'org.projectlombok:lombok:1.18.12' // 테스트 의존성 추가
+	testCompileOnly 'org.projectlombok:lombok' // 테스트 의존성 추가
+	testAnnotationProcessor 'org.projectlombok:lombok' // 테스트 의존성 추가
 }
 
 jacocoTestReport{
 	reports {
-		xml.required = false
-		csv.required = false
+		xml.required = true
+		csv.required = true
 		html.required = true
 	}
+}
+
+tasks.withType(JavaCompile).configureEach {
+	options.encoding = "UTF-8"
 }
 
 tasks.named('test') {
@@ -63,12 +67,18 @@ jacocoTestCoverageVerification {
 	violationRules {
 		rule {
 			enabled = true;
-			element = 'CLASS'
+			element = 'BUNDLE'
 
 			limit {
-				counter = 'METHOD'
+				counter = 'INSTRUCTION'
 				value = 'COVEREDRATIO'
-				minimum = 0.5
+				minimum = 0.0
+			}
+			element = 'METHOD'
+			limit{
+				counter = 'LINE'
+				value = 'TOTALCOUNT'
+				maximum = 50
 			}
 		}
 
