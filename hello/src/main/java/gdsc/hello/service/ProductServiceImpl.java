@@ -24,7 +24,7 @@ public class ProductServiceImpl implements ProductService{
         log.info("[getProduct] input number : {}", number);
         Product product = productRepository.findById(number).get();
 
-        log.info("[getProduct] product number : {}, name : {}", product.getNumber());
+        log.info("[getProduct] product number : {}, name : {}", product.getNumber(),product.getName());
         ProductResponseDto productResponseDto = new ProductResponseDto();
         productResponseDto.setNumber(product.getNumber());
         productResponseDto.setName(product.getName());

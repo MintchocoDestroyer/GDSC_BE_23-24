@@ -6,6 +6,7 @@ import gdsc.hello.data.dto.ChangeProductNameDto;
 import gdsc.hello.data.dto.ProductDto;
 import gdsc.hello.data.dto.ProductResponseDto;
 import gdsc.hello.service.ProductService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,17 +14,13 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/product")
+@RequiredArgsConstructor
 public class ProductController {
 
     private final ProductService productService;
 
-    @Autowired
-    public ProductController(ProductService productService) {
-        this.productService = productService;
-    }
-
     @GetMapping()
-    public ResponseEntity<ProductResponseDto> getProduct(Long number){
+    public ResponseEntity<ProductResponseDto> getProduct(@RequestParam(name="number") Long number){
         ProductResponseDto productResponseDto = productService.getProduct(number);
 
         return ResponseEntity.status(HttpStatus.OK).body(productResponseDto);
