@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.2.0'
 	id 'io.spring.dependency-management' version '1.1.4'
+	id 'jacoco'
 }
 
 group = 'gdsc'
@@ -13,6 +14,11 @@ java {
 
 repositories {
 	mavenCentral()
+}
+
+jacoco {
+	toolVersion = "0.8.11"
+	reportsDirectory = layout.buildDirectory.dir('customJacocoReportDir')
 }
 
 dependencies {
@@ -34,6 +40,37 @@ dependencies {
 	testAnnotationProcessor 'org.projectlombok:lombok:1.18.12' // 테스트 의존성 추가
 }
 
+jacocoTestReport{
+	reports {
+		xml.required = false
+		csv.required = false
+		html.required = true
+	}
+}
+
 tasks.named('test') {
+	finalizedBy jacocoTestReport
 	useJUnitPlatform()
+}
+
+jacocoTestReport {
+
+	dependsOn test
+	finalizedBy 'jacocoTestCoverageVerification'
+}
+
+jacocoTestCoverageVerification {
+	violationRules {
+		rule {
+			enabled = true;
+			element = 'CLASS'
+
+			limit {
+				counter = 'METHOD'
+				value = 'COVEREDRATIO'
+				minimum = 0.5
+			}
+		}
+
+	}
 }
