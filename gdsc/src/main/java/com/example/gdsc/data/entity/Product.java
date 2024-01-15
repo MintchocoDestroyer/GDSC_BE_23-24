@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
@@ -31,4 +32,15 @@ public class Product {
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "number=" + number +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", stock=" + stock +
+
+                '}';
+    }
 }
