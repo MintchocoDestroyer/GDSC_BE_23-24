@@ -3,6 +3,8 @@ package com.example.gdsc.data.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -42,5 +44,13 @@ public class Product extends BaseEntity{
     @JoinColumn(name="provider_id")
     @ToString.Exclude
     private Provider provider;
+
+    @ManyToMany
+    @ToString.Exclude
+    private List<Producer> producers = new ArrayList<>();
+
+    public void addProducer(Producer producer){
+        this.producers.add(producer);
+    }
 
 }
