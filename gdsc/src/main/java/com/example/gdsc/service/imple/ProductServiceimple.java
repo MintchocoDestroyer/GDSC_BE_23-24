@@ -1,19 +1,16 @@
 package com.example.gdsc.service.imple;
 
 
-import com.example.gdsc.data.dao.ProductDAO;
 import com.example.gdsc.data.dto.ProductDto;
 import com.example.gdsc.data.dto.ProductResponseDto;
 import com.example.gdsc.data.entity.Product;
 import com.example.gdsc.data.repository.ProductRepository;
 import com.example.gdsc.service.ProductService;
-import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 

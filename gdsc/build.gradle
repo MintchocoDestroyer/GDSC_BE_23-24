@@ -47,6 +47,12 @@ dependencies {
 	implementation 'com.querydsl:querydsl-jpa:5.0.0'
 	implementation 'com.querydsl:querydsl-apt:5.0.0'
 	implementation 'com.querydsl:querydsl-core:5.0.0'
+
+	// Hibernate Core
+	implementation 'org.hibernate:hibernate-core:5.6.3.Final' // Hibernate의 최신 버전으로 변경 가능
+
+	// Hibernate Entity Manager
+	implementation 'org.hibernate:hibernate-entitymanager:5.6.3.Final'
 }
 
 

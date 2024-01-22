@@ -1,6 +1,5 @@
 package com.example.gdsc.service.impl;
 
-import com.example.gdsc.data.dao.ProductDAO;
 import com.example.gdsc.data.dto.ProductDto;
 import com.example.gdsc.data.dto.ProductResponseDto;
 import com.example.gdsc.data.entity.Product;
@@ -8,7 +7,6 @@ import com.example.gdsc.data.repository.ProductRepository;
 import com.example.gdsc.service.ProductService;
 import com.example.gdsc.service.imple.ProductServiceimple;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
