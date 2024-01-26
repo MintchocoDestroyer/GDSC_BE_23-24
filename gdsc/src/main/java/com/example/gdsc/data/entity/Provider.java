@@ -21,13 +21,17 @@ public class Provider extends BaseEntity{
 
     private String name;
 
-    //다대일 양방향 매핑
-    @OneToMany(mappedBy = "provider",fetch = FetchType.EAGER)//즉시로딩 설정
-    @ToString.Exclude
-    private List<Product> productList = new ArrayList<>();
+//    //다대일 양방향 매핑
+//    @OneToMany(mappedBy = "provider",fetch = FetchType.EAGER)//즉시로딩 설정
+//    @ToString.Exclude
+//    private List<Product> productList = new ArrayList<>();
 
 //    //영속성 전이
 //    @OneToMany(mappedBy = "provider",cascade=CascadeType.PERSIST)
 //    @ToString.Exclude
 //    private List<Product> productList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "provider", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    @ToString.Exclude
+    private List<Product> productList = new ArrayList<>();
 }
