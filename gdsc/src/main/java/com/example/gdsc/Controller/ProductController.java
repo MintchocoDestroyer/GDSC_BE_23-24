@@ -20,7 +20,7 @@ public class ProductController {
     }
 
     @GetMapping
-    public ResponseEntity<ProductResponseDto> getProduct(Long number) {
+    public ResponseEntity<ProductResponseDto> getProduct(Long number) throws Exception {
         ProductResponseDto productResponseDto = productService.getProduct(number);
 
         return ResponseEntity

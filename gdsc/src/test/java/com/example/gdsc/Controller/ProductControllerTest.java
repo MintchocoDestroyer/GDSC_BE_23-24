@@ -1,5 +1,6 @@
-package com.example.gdsc.Controller;
+package com.example.gdsc.controller;
 
+import com.example.gdsc.Controller.ProductController;
 import com.example.gdsc.data.dto.ProductDto;
 import com.example.gdsc.data.dto.ProductResponseDto;
 import com.example.gdsc.service.imple.ProductServiceimple;
@@ -13,6 +14,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.refEq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -63,7 +66,7 @@ class ProductControllerTest {
     @DisplayName("Product 데이터 생성 테스트")
     void createProductTest() throws Exception {
         //Mock 객체에서 특정 메소드가 실행되는 경우 실제 Return을 줄 수 없기 때문에 아래와 같이 가정 사항을 만들어줌
-        given(productService.saveProduct(new ProductDto("pen", 5000, 2000)))
+        given(productService.saveProduct(any()))
                 .willReturn(new ProductResponseDto(12315L, "pen", 5000, 2000));
 
         ProductDto productDto = ProductDto.builder()
@@ -86,6 +89,6 @@ class ProductControllerTest {
                 .andExpect(jsonPath("$.stock").exists())
                 .andDo(print());
 
-        verify(productService).saveProduct(new ProductDto("pen", 5000, 2000));
+        verify(productService).saveProduct(refEq(new ProductDto("pen", 5000, 2000)) );
     }
 }

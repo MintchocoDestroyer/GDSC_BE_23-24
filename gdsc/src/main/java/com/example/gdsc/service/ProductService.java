@@ -6,7 +6,7 @@ import com.example.gdsc.data.repository.ProductRepository;
 
 public interface ProductService {
 
-    ProductResponseDto getProduct(Long number);
+    ProductResponseDto getProduct(Long number) throws Exception;
     ProductResponseDto saveProduct(ProductDto productDto);
     ProductResponseDto changeProductName(Long number, String name) throws Exception;
     void deleteProduct(Long number) throws Exception;

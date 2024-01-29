@@ -3,18 +3,19 @@ package com.example.gdsc.data.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Builder
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
-@ToString(exclude = "name")
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 @Table(name = "product")
-public class Product {
+public class Product extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +30,27 @@ public class Product {
     @Column(nullable = false)
     private Integer stock;
 
-    private LocalDateTime createdAt;
+    //join 중복
+//    @OneToOne
+//    private ProductDetail productDetail;
 
-    private LocalDateTime updatedAt;
+    //중복 제거
+    @OneToOne(mappedBy = "product")
+    @ToString.Exclude //순환참조 방지
+    private ProductDetail productDetail;
+
+    //다대일 매핑
+    @ManyToOne
+    @JoinColumn(name="provider_id")
+    @ToString.Exclude
+    private Provider provider;
+
+    @ManyToMany
+    @ToString.Exclude
+    private List<Producer> producers = new ArrayList<>();
+
+    public void addProducer(Producer producer){
+        this.producers.add(producer);
+    }
+
 }

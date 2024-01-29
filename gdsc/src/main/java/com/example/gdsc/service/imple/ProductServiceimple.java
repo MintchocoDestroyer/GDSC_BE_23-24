@@ -1,19 +1,17 @@
 package com.example.gdsc.service.imple;
 
 
-import com.example.gdsc.data.dao.ProductDAO;
 import com.example.gdsc.data.dto.ProductDto;
 import com.example.gdsc.data.dto.ProductResponseDto;
 import com.example.gdsc.data.entity.Product;
 import com.example.gdsc.data.repository.ProductRepository;
 import com.example.gdsc.service.ProductService;
-import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.util.Optional;
 
 
 @Service
@@ -28,21 +26,27 @@ public class ProductServiceimple implements ProductService {
     }
 
     @Override
-    public ProductResponseDto getProduct(Long number) {
-        LOGGER.info("[getProduct] input number : {}", number);
-        Product product = productRepository.findById(number).get();
+    public ProductResponseDto getProduct(Long number) throws Exception {
+        Optional<Product> productOptional = productRepository.findById(number);
 
-        LOGGER.info("[getProduct] product number : {}, name : {}", product.getNumber(),
-                product.getName());
-        ProductResponseDto productResponseDto = new ProductResponseDto();
-        productResponseDto.setNumber(product.getNumber());
-        productResponseDto.setName(product.getName());
-        productResponseDto.setPrice(product.getPrice());
-        productResponseDto.setStock(product.getStock());
+        if (productOptional.isPresent()) {
+            Product product = productOptional.get();
+            // Product를 ProductResponseDto로 변환하는 로직이 필요함
+            return convertToProductResponseDto(product);
+        } else {
+            // 해당 number에 해당하는 제품이 없을 경우, 예외 처리 또는 기본값 반환 등의 로직을 추가할 수 있음
+            return null;
+        }
 
-        return productResponseDto;
     }
-
+    private ProductResponseDto convertToProductResponseDto(Product product) {
+        return ProductResponseDto.builder()
+                .number(product.getNumber())
+                .name(product.getName())
+                .price(product.getPrice())
+                .stock(product.getStock())
+                .build();
+    }
     @Override
     public ProductResponseDto saveProduct(ProductDto productDto) {
         LOGGER.info("[saveProduct] productDTO : {}", productDto.toString());

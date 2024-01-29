@@ -1,9 +1,10 @@
-package com.example.gdsc.service;
+package com.example.gdsc.service.impl;
 
 import com.example.gdsc.data.dto.ProductDto;
 import com.example.gdsc.data.dto.ProductResponseDto;
 import com.example.gdsc.data.entity.Product;
 import com.example.gdsc.data.repository.ProductRepository;
+import com.example.gdsc.service.ProductService;
 import com.example.gdsc.service.imple.ProductServiceimple;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -17,13 +18,13 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.util.Optional;
 
 import static org.mockito.AdditionalAnswers.returnsFirstArg;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(SpringExtension.class)
 @Import({ProductServiceimple.class})
-public class ProductServiceTest2 {
-
+public class ProductServiceTest {
     @MockBean
     ProductRepository productRepository;
 
@@ -31,21 +32,21 @@ public class ProductServiceTest2 {
     ProductService productService;
 
     @Test
-    public void getProductTest() {
-        // given
+    public void getProductTest() throws Exception {
+        //given
         Product givenProduct = new Product();
         givenProduct.setNumber(123L);
         givenProduct.setName("펜");
         givenProduct.setPrice(1000);
         givenProduct.setStock(1234);
 
-        Mockito.when(productRepository.findById(123L))
-                .thenReturn(Optional.of(givenProduct));
+        Mockito.when(productRepository.findById(123L)).thenReturn(Optional.of(givenProduct));
 
-        // when
+        //when
         ProductResponseDto productResponseDto = productService.getProduct(123L);
 
-        // then
+        //then
+
         Assertions.assertEquals(productResponseDto.getNumber(), givenProduct.getNumber());
         Assertions.assertEquals(productResponseDto.getName(), givenProduct.getName());
         Assertions.assertEquals(productResponseDto.getPrice(), givenProduct.getPrice());
@@ -53,10 +54,8 @@ public class ProductServiceTest2 {
 
         verify(productRepository).findById(123L);
     }
-
     @Test
-    void saveProductTest() {
-        // given
+    void saveProduct(){
         Mockito.when(productRepository.save(any(Product.class)))
                 .then(returnsFirstArg());
 
