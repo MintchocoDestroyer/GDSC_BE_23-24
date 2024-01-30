@@ -1,12 +1,35 @@
+buildscript {
+	ext {
+		queryDslVersion = "5.0.0"
+	}
+}
+
 plugins {
-	id 'org.springframework.boot' version '2.4.2'
+	id 'org.springframework.boot' version '2.5.3'
 	id 'io.spring.dependency-management' version '1.1.4'
 	id 'java'
 	id 'jacoco'
+	id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
+
 }
 
 jacoco{
 	toolVersion = '0.8.7'
+}
+
+def querydslDir = "$buildDir/generated/querydsl"
+
+querydsl {
+	jpa = true
+	querydslSourcesDir = querydslDir
+}
+
+sourceSets {
+	main.java.srcDir querydslDir
+}
+
+compileQuerydsl {
+	options.annotationProcessorPath = configurations.querydsl
 }
 
 jacocoTestReport {
@@ -23,6 +46,7 @@ jacocoTestReport {
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
 
 java {
 	sourceCompatibility = '11'
@@ -32,6 +56,7 @@ configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
+	querydsl.extendsFrom compileClasspath
 }
 
 repositories {
@@ -54,7 +79,17 @@ dependencies {
 	//swagger
 	implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
 	implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
+	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
+	implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
 
+}
+
+sourceSets {
+	main {
+		java {
+			srcDirs = ["$projectDir/src/main/java", "$projectDir/build/generated"]
+		}
+	}
 }
 
 test{
