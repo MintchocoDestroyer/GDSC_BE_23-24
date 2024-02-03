@@ -1,8 +1,8 @@
 package gdsc.hello.dao.impl;
 
 import gdsc.hello.dao.ProductDAO;
-import gdsc.hello.entity.Product;
-import gdsc.hello.repository.ProductRepository;
+import gdsc.hello.data.entity.Product;
+import gdsc.hello.data.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -37,7 +37,6 @@ public class ProductDAOImpl implements ProductDAO {
             Product product = selectedProduct.get();
 
             product.setName(name);
-            product.setUpdatedAt(LocalDateTime.now());
             updatedProduct = productRepository.save(product);
         }else{
             throw new Exception();

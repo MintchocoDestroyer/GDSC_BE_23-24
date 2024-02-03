@@ -1,6 +1,7 @@
 package gdsc.hello.dao;
 
-import gdsc.hello.entity.Product;
+
+import gdsc.hello.data.entity.Product;
 
 public interface ProductDAO{
 
