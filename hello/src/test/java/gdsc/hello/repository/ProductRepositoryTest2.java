@@ -1,6 +1,8 @@
 package gdsc.hello.repository;
 
-import gdsc.hello.entity.Product;
+
+import gdsc.hello.data.entity.Product;
+import gdsc.hello.data.repository.ProductRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

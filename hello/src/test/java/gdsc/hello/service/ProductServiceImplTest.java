@@ -2,8 +2,8 @@ package gdsc.hello.service;
 
 import gdsc.hello.data.dto.ProductDto;
 import gdsc.hello.data.dto.ProductResponseDto;
-import gdsc.hello.entity.Product;
-import gdsc.hello.repository.ProductRepository;
+import gdsc.hello.data.entity.Product;
+import gdsc.hello.data.repository.ProductRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
